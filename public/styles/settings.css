@@ -1,4 +1,4 @@
-.sectie-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#88908a;margin:14px 0 8px}
-.limiet-rij{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.sectie-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 8px}
+.limiet-rij{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
 .limiet-rij:last-child{border-bottom:none}
 .limiet-icon{font-size:20px}
