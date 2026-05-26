@@ -16,35 +16,35 @@
 <body class="page page-settings">
 
 <header class="topbar text-center p-3 bg-light">
-  <h4>Settings</h4>
+  <h4 data-i18n="settings">Settings</h4>
 </header>
 
 <main class="container py-3">
 
   <!-- Profiel -->
-  <p class="sectie-label">👤 Profiel</p>
+  <p class="sectie-label">👤 <span data-i18n="profile">Profiel</span></p>
   <div class="card p-3 mb-3">
     <div class="mb-3">
-      <label class="form-label fw-semibold">Naam</label>
-      <input type="text" class="form-control" id="naam" placeholder="Jouw naam">
+      <label class="form-label fw-semibold" data-i18n="name">Naam</label>
+      <input type="text" class="form-control" id="naam" data-i18n-placeholder="namePlaceholder" placeholder="Jouw naam">
     </div>
     <div class="row g-2 mb-3">
       <div class="col-4">
-        <label class="form-label fw-semibold">Leeftijd</label>
+        <label class="form-label fw-semibold" data-i18n="age">Leeftijd</label>
         <div class="input-group">
           <input type="number" class="form-control" id="leeftijd" placeholder="25">
           <span class="input-group-text">jr</span>
         </div>
       </div>
       <div class="col-4">
-        <label class="form-label fw-semibold">Gewicht</label>
+        <label class="form-label fw-semibold" data-i18n="weight">Gewicht</label>
         <div class="input-group">
           <input type="number" class="form-control" id="gewicht" placeholder="70">
           <span class="input-group-text">kg</span>
         </div>
       </div>
       <div class="col-4">
-        <label class="form-label fw-semibold">Lengte</label>
+        <label class="form-label fw-semibold" data-i18n="height">Lengte</label>
         <div class="input-group">
           <input type="number" class="form-control" id="lengte" placeholder="175">
           <span class="input-group-text">cm</span>
@@ -52,70 +52,80 @@
       </div>
     </div>
     <div class="mb-3">
-      <label class="form-label fw-semibold">Geslacht</label>
+      <label class="form-label fw-semibold" data-i18n="gender">Geslacht</label>
       <div class="d-flex gap-2">
-        <button class="btn flex-fill geslacht-btn" data-val="man" id="btn-man">♂ Man</button>
-        <button class="btn flex-fill geslacht-btn" data-val="vrouw" id="btn-vrouw">♀ Vrouw</button>
+        <button class="btn flex-fill geslacht-btn" data-val="man" id="btn-man">♂ <span data-i18n="male">Man</span></button>
+        <button class="btn flex-fill geslacht-btn" data-val="vrouw" id="btn-vrouw">♀ <span data-i18n="female">Vrouw</span></button>
       </div>
     </div>
     <div class="mb-3">
-      <label class="form-label fw-semibold">Doel</label>
+      <label class="form-label fw-semibold" data-i18n="goal">Doel</label>
       <div class="d-flex gap-2 flex-wrap">
-        <button class="btn flex-fill doel-btn" data-val="afvallen" id="btn-afvallen">📉 Afvallen</button>
-        <button class="btn flex-fill doel-btn" data-val="onderhoud" id="btn-onderhoud">⚖️ Op gewicht blijven</button>
-        <button class="btn flex-fill doel-btn" data-val="aankomen" id="btn-aankomen">📈 Aankomen</button>
+        <button class="btn flex-fill doel-btn" data-val="afvallen" id="btn-afvallen">📉 <span data-i18n="lose">Afvallen</span></button>
+        <button class="btn flex-fill doel-btn" data-val="onderhoud" id="btn-onderhoud">⚖️ <span data-i18n="maintain">Op gewicht blijven</span></button>
+        <button class="btn flex-fill doel-btn" data-val="aankomen" id="btn-aankomen">📈 <span data-i18n="gain">Aankomen</span></button>
       </div>
     </div>
     <button class="btn btn-success w-100 fw-semibold" id="saveBtn">
       <span class="material-symbols-outlined align-middle me-1" style="font-size:18px">save</span>
-      Opslaan
+      <span data-i18n="save">Opslaan</span>
     </button>
-    <p class="text-success text-center mt-2 mb-0 small d-none" id="savedMsg">✓ Profiel opgeslagen!</p>
+    <p class="text-success text-center mt-2 mb-0 small d-none" id="savedMsg" data-i18n="savedProfile">✓ Profiel opgeslagen!</p>
   </div>
 
   <!-- Berekende limieten -->
-  <p class="sectie-label">📊 Jouw daglimieten</p>
+  <p class="sectie-label">📊 <span data-i18n="dailyLimits">Jouw daglimieten</span></p>
   <div class="card p-3 mb-3" id="limieten-card">
     <div class="limiet-rij">
       <span class="material-symbols-outlined limiet-icon" style="color:#16a34a">restaurant</span>
-      <span>Calorieën</span>
+      <span data-i18n="calories">Calorieën</span>
       <span class="fw-bold ms-auto" id="lim-kcal">—</span>
     </div>
     <div class="limiet-rij">
       <span class="material-symbols-outlined limiet-icon" style="color:#2563eb">water_drop</span>
-      <span>Water</span>
+      <span data-i18n="water">Water</span>
       <span class="fw-bold ms-auto" id="lim-water">—</span>
     </div>
     <div class="limiet-rij">
       <span class="material-symbols-outlined limiet-icon" style="color:#7e22ce">bedtime</span>
-      <span>Slaap</span>
+      <span data-i18n="sleep">Slaap</span>
       <span class="fw-bold ms-auto" id="lim-slaap">—</span>
     </div>
     <div class="limiet-rij">
       <span class="material-symbols-outlined limiet-icon" style="color:#ea580c">directions_run</span>
-      <span>Activiteit</span>
+      <span data-i18n="activity">Activiteit</span>
       <span class="fw-bold ms-auto" id="lim-activiteit">—</span>
     </div>
   </div>
 
   <!-- Weergave -->
-  <p class="sectie-label">🎨 Weergave</p>
+  <p class="sectie-label">🎨 <span data-i18n="display">Weergave</span></p>
   <div class="card p-3 mb-3 d-flex justify-content-between align-items-center flex-row">
     <div>
-      <div class="fw-semibold">Dark mode</div>
-      <small class="text-muted">Donker thema</small>
+      <div class="fw-semibold" data-i18n="darkMode">Dark mode</div>
+      <small class="text-muted" data-i18n="darkModeSubtitle">Donker thema</small>
     </div>
     <div class="form-check form-switch mb-0">
       <input class="form-check-input" type="checkbox" id="darkModeToggle" role="switch" style="width:3em;height:1.5em;">
     </div>
   </div>
 
+  <div class="card p-3 mb-3 d-flex justify-content-between align-items-center flex-row">
+    <div>
+      <div class="fw-semibold" data-i18n="language">Taal</div>
+      <small class="text-muted" data-i18n="languageSubtitle">Wissel alle tekst tussen Nederlands en Engels</small>
+    </div>
+    <button class="btn btn-outline-primary fw-semibold" id="languageToggleBtn" type="button">
+      <span id="languageToggleText"></span>
+    </button>
+  </div>
+
   <!-- Data wissen -->
-  <p class="sectie-label">⚠️ Data</p>
+  <p class="sectie-label">⚠️ <span data-i18n="data">Data</span></p>
   <div class="card p-3 mb-3">
     <button class="btn btn-outline-danger w-100" id="resetBtn">
       <span class="material-symbols-outlined align-middle me-1" style="font-size:18px">delete</span>
-      Alle data wissen
+      <span data-i18n="clearAllData">Alle data wissen</span>
     </button>
   </div>
 
@@ -128,6 +138,15 @@
 <script src="js/app.js"></script>
 
 <script>
+  function updateLanguageButton() {
+    const btn = document.getElementById("languageToggleBtn");
+    const text = document.getElementById("languageToggleText");
+    if (!btn || !text) return;
+    const language = getLanguage();
+    text.textContent = language === "nl" ? t("switchToEnglish") : t("switchToDutch");
+    btn.setAttribute("aria-label", text.textContent);
+  }
+
   // Profiel inladen
   const p = getProfiel();
   if (p.naam)     document.getElementById("naam").value     = p.naam;
@@ -201,17 +220,26 @@
     });
     updateLimieten();
     const msg = document.getElementById("savedMsg");
+    msg.textContent = t("savedProfile");
     msg.classList.remove("d-none");
     setTimeout(() => msg.classList.add("d-none"), 2500);
   });
 
+  document.getElementById("languageToggleBtn").addEventListener("click", () => {
+    setLanguage(getLanguage() === "nl" ? "en" : "nl");
+    applyTranslations(document);
+    updateLanguageButton();
+  });
+
   // Data wissen
   document.getElementById("resetBtn").addEventListener("click", () => {
-    if (confirm("Weet je zeker dat je alle data wilt wissen?")) {
+    if (confirm(t("clearDataConfirm"))) {
       localStorage.clear();
       location.reload();
     }
   });
+
+  updateLanguageButton();
 </script>
 
 

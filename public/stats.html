@@ -16,7 +16,7 @@
 <body class="page page-stats">
 
 <header class="topbar text-center p-3 bg-light">
-  <h4>Stats</h4>
+  <h4 data-i18n="stats">Stats</h4>
 </header>
 
 <main class="container py-3">
@@ -27,24 +27,24 @@
     </div>
     <div class="btn-group w-100" role="group">
       <input type="radio" class="btn-check" name="period" id="period-dag" value="dag">
-      <label class="btn btn-outline-primary" for="period-dag">Dag</label>
+      <label class="btn btn-outline-primary" for="period-dag" data-i18n="periodDay">Dag</label>
 
       <input type="radio" class="btn-check" name="period" id="period-week" value="week" checked>
-      <label class="btn btn-outline-primary" for="period-week">Week</label>
+      <label class="btn btn-outline-primary" for="period-week" data-i18n="periodWeek">Week</label>
 
       <input type="radio" class="btn-check" name="period" id="period-maand" value="maand">
-      <label class="btn btn-outline-primary" for="period-maand">Maand</label>
+      <label class="btn btn-outline-primary" for="period-maand" data-i18n="periodMonth">Maand</label>
     </div>
   </div>
 
   <!-- Overzicht periode -->
-  <p class="sectie-label">📊 Overzicht periode</p>
+  <p class="sectie-label">📊 <span data-i18n="overviewPeriod">Overzicht periode</span></p>
   <div class="card p-3 mb-3">
     <div class="row text-center g-2" id="week-overzicht"></div>
   </div>
 
   <!-- Calorieën grafiek -->
-  <p class="sectie-label">🍽️ Calorieën (7 dagen)</p>
+  <p class="sectie-label">🍽️ <span data-i18n="calories7days">Calorieën (7 dagen)</span></p>
   <div class="card p-3 mb-3">
     <div class="grafiek-wrapper">
       <div class="grafiek" id="grafiek-kcal"></div>
@@ -52,7 +52,7 @@
   </div>
 
   <!-- Water grafiek -->
-  <p class="sectie-label">💧 Water (7 dagen)</p>
+  <p class="sectie-label">💧 <span data-i18n="water7days">Water (7 dagen)</span></p>
   <div class="card p-3 mb-3">
     <div class="grafiek-wrapper">
       <div class="grafiek" id="grafiek-water"></div>
@@ -60,13 +60,13 @@
   </div>
 
   <!-- Gemiddelden -->
-  <p class="sectie-label">📈 Gemiddelden deze week</p>
+  <p class="sectie-label">📈 <span data-i18n="averagesWeek">Gemiddelden deze week</span></p>
   <div class="card p-3 mb-3">
     <div class="row g-3" id="gemiddelden"></div>
   </div>
 
   <!-- Streaks -->
-  <p class="sectie-label">🔥 Streaks</p>
+  <p class="sectie-label">🔥 <span data-i18n="streaks">Streaks</span></p>
   <div class="card p-3 mb-3" id="streaks-card"></div>
 
 </main>
@@ -77,7 +77,7 @@
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
-  document.getElementById("dateText").textContent = new Date().toLocaleDateString("nl-NL", {
+  document.getElementById("dateText").textContent = formatDate(new Date(), {
     weekday: "long", year: "numeric", month: "long", day: "numeric"
   });
 
@@ -176,10 +176,10 @@
     const gemAct   = gem(dagen.map(d => d.activiteit));
 
     const stats = [
-      { icon: "restaurant",     kleur: "green",  label: "Calorieën",  waarde: gemKcal  + " kcal", doel: limieten.kcal        + " kcal" },
-      { icon: "water_drop",     kleur: "blue",   label: "Water",      waarde: gemWater + " L",    doel: limieten.water       + " L"    },
-      { icon: "bedtime",        kleur: "purple", label: "Slaap",      waarde: gemSlaap + " uur",  doel: limieten.slaap       + " uur"  },
-      { icon: "directions_run", kleur: "orange", label: "Activiteit", waarde: gemAct   + " min",  doel: limieten.activiteit  + " min"  },
+      { icon: "restaurant",     kleur: "green",  label: t("calories"),  waarde: gemKcal  + " kcal", doel: limieten.kcal        + " kcal" },
+      { icon: "water_drop",     kleur: "blue",   label: t("water"),     waarde: gemWater + " L",    doel: limieten.water       + " L"    },
+      { icon: "bedtime",        kleur: "purple", label: t("sleep"),     waarde: gemSlaap + " uur",  doel: limieten.slaap       + " uur"  },
+      { icon: "directions_run", kleur: "orange", label: t("activity"),  waarde: gemAct   + " min",  doel: limieten.activiteit  + " min"  },
     ];
 
     stats.forEach(s => {
@@ -210,10 +210,10 @@
     }
 
     const streaks = [
-      { label: "Calorie doel gehaald",     streak: berekenStreak(d => d.kcal > 0 && d.kcal <= limieten.kcal * 1.1) },
-      { label: "Waterdoel gehaald",        streak: berekenStreak(d => d.water >= limieten.water) },
-      { label: "Slaapdoel gehaald",        streak: berekenStreak(d => d.slaap >= limieten.slaap) },
-      { label: "Activiteitsdoel gehaald",  streak: berekenStreak(d => d.activiteit >= limieten.activiteit) },
+      { label: t("goalReachedCalorie"),    streak: berekenStreak(d => d.kcal > 0 && d.kcal <= limieten.kcal * 1.1) },
+      { label: t("goalReachedWater"),      streak: berekenStreak(d => d.water >= limieten.water) },
+      { label: t("goalReachedSleep"),      streak: berekenStreak(d => d.slaap >= limieten.slaap) },
+      { label: t("goalReachedActivity"),   streak: berekenStreak(d => d.activiteit >= limieten.activiteit) },
     ];
 
     const streakEl = document.getElementById("streaks-card");
@@ -223,7 +223,7 @@
       streakEl.innerHTML += `
         <div class="d-flex justify-content-between align-items-center py-2 ${i > 0 ? 'border-top' : ''}">
           <span>${vuur} ${s.label}</span>
-          <span class="fw-bold">${s.streak} dag${s.streak !== 1 ? "en" : ""}</span>
+          <span class="fw-bold">${s.streak} ${s.streak !== 1 ? t("dayPlural") : t("daySingular")}</span>
         </div>`;
     });
   }

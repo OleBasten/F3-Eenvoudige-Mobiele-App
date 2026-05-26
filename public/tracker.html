@@ -16,7 +16,7 @@
 <body class="page page-tracker">
 
 <header class="topbar text-center p-3 bg-light">
-  <h4>Tracker</h4>
+  <h4 data-i18n="tracker">Tracker</h4>
 </header>
 
 <main class="container py-3">
@@ -26,16 +26,16 @@
   </div>
 
   <!-- ETEN -->
-  <p class="sectie-label">🍽️ Eten</p>
+  <p class="sectie-label">🍽️ <span data-i18n="meals">Eten</span></p>
 
   <div class="card p-3 mb-2" id="maaltijden-lijst">
-    <p class="text-muted text-center mb-0" id="geen-maaltijden">Nog niets toegevoegd vandaag</p>
+    <p class="text-muted text-center mb-0" id="geen-maaltijden" data-i18n="noMealsToday">Nog niets toegevoegd vandaag</p>
   </div>
 
   <div class="card p-3 mb-3">
     <div class="row g-2">
       <div class="col-12">
-        <input type="text" class="form-control" id="eten-naam" placeholder="Naam (bijv. Havermout)">
+        <input type="text" class="form-control" id="eten-naam" data-i18n-placeholder="mealNamePlaceholder" placeholder="Naam (bijv. Havermout)">
       </div>
       <div class="col-6">
         <div class="input-group">
@@ -45,26 +45,26 @@
       </div>
       <div class="col-6">
         <select class="form-select" id="eten-type">
-          <option value="ontbijt">Ontbijt</option>
-          <option value="lunch">Lunch</option>
-          <option value="diner">Diner</option>
-          <option value="snack">Snack</option>
+          <option value="ontbijt" data-i18n="mealBreakfast">Ontbijt</option>
+          <option value="lunch" data-i18n="mealLunch">Lunch</option>
+          <option value="diner" data-i18n="mealDinner">Diner</option>
+          <option value="snack" data-i18n="mealSnack">Snack</option>
         </select>
       </div>
       <div class="col-12">
         <button class="btn btn-success w-100" id="voeg-eten-toe">
           <span class="material-symbols-outlined align-middle me-1" style="font-size:18px">add</span>
-          <span id="eten-btn-text">Maaltijd toevoegen</span>
+          <span id="eten-btn-text" data-i18n="mealAdd">Maaltijd toevoegen</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- WATER -->
-  <p class="sectie-label">💧 Water</p>
+  <p class="sectie-label">💧 <span data-i18n="water">Water</span></p>
   <div class="card p-3 mb-3">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <span class="fw-semibold">Vandaag gedronken</span>
+      <span class="fw-semibold" data-i18n="waterToday">Vandaag gedronken</span>
       <span class="fw-bold fs-5 text-primary" id="water-display">0 L</span>
     </div>
     <div class="d-flex gap-2">
@@ -76,7 +76,7 @@
   </div>
 
   <!-- SLAAP -->
-  <p class="sectie-label">😴 Slaap</p>
+  <p class="sectie-label">😴 <span data-i18n="sleep">Slaap</span></p>
   <div class="card p-3 mb-3">
     <div class="d-flex align-items-center gap-3">
       <div class="flex-grow-1">
@@ -85,17 +85,17 @@
           <span class="input-group-text">uur</span>
         </div>
       </div>
-      <button class="btn btn-success" id="slaap-opslaan">Opslaan</button>
+      <button class="btn btn-success" id="slaap-opslaan" data-i18n="sleepSave">Opslaan</button>
     </div>
     <p class="text-success mt-2 mb-0 small" id="slaap-status"></p>
   </div>
 
   <!-- ACTIVITEIT -->
-  <p class="sectie-label">🏃 Activiteit</p>
+  <p class="sectie-label">🏃 <span data-i18n="activity">Activiteit</span></p>
   <div class="card p-3 mb-3">
     <div class="row g-2">
       <div class="col-8">
-        <input type="text" class="form-control" id="activiteit-naam" placeholder="Bijv. Fietsen, Wandelen">
+        <input type="text" class="form-control" id="activiteit-naam" data-i18n-placeholder="activityNamePlaceholder" placeholder="Bijv. Fietsen, Wandelen">
       </div>
       <div class="col-4">
         <div class="input-group">
@@ -106,7 +106,7 @@
       <div class="col-12">
         <button class="btn btn-success w-100" id="voeg-activiteit-toe">
           <span class="material-symbols-outlined align-middle me-1" style="font-size:18px">add</span>
-          Activiteit toevoegen
+          <span data-i18n="activityAdd">Activiteit toevoegen</span>
         </button>
       </div>
     </div>
@@ -124,9 +124,19 @@
   let dagData = getDagData();
 
   // Datum
-  document.getElementById("dateText").textContent = new Date().toLocaleDateString("nl-NL", {
+  document.getElementById("dateText").textContent = formatDate(new Date(), {
     weekday: "long", year: "numeric", month: "long", day: "numeric"
   });
+
+  function mealTypeLabel(type) {
+    const labels = {
+      ontbijt: t("mealBreakfast"),
+      lunch: t("mealLunch"),
+      diner: t("mealDinner"),
+      snack: t("mealSnack"),
+    };
+    return labels[type] || type;
+  }
 
   // ── Maaltijden ──
   let editingMealIndex = null;
@@ -145,7 +155,7 @@
       if (i < dagData.maaltijden.length - 1) div.style.borderBottom = "1px solid #eee";
       div.innerHTML = `
         <div class="d-flex align-items-center gap-2">
-          <span class="badge-type badge-${m.type}">${m.type}</span>
+          <span class="badge-type badge-${m.type}">${mealTypeLabel(m.type)}</span>
           <span>${m.naam}</span>
         </div>
         <div class="d-flex align-items-center gap-2">
@@ -168,7 +178,7 @@
         document.getElementById("eten-naam").value = m.naam;
         document.getElementById("eten-kcal").value = m.kcal;
         document.getElementById("eten-type").value = m.type;
-        document.getElementById("eten-btn-text").textContent = "Wijziging opslaan";
+        document.getElementById("eten-btn-text").textContent = t("mealUpdate");
         document.getElementById("eten-naam").focus();
       });
     });
@@ -186,12 +196,12 @@
     const naam = document.getElementById("eten-naam").value.trim();
     const kcal = parseInt(document.getElementById("eten-kcal").value);
     const type = document.getElementById("eten-type").value;
-    if (!naam || isNaN(kcal) || kcal <= 0) { alert("Vul een naam en geldig aantal kcal in."); return; }
+    if (!naam || isNaN(kcal) || kcal <= 0) { alert(t("validMealError")); return; }
 
     if (editingMealIndex !== null) {
       dagData.maaltijden[editingMealIndex] = { naam, kcal, type };
       editingMealIndex = null;
-      document.getElementById("eten-btn-text").textContent = "Maaltijd toevoegen";
+      document.getElementById("eten-btn-text").textContent = t("mealAdd");
     } else {
       dagData.maaltijden.push({ naam, kcal, type });
     }
@@ -217,7 +227,7 @@
   });
 
   document.getElementById("water-reset").addEventListener("click", () => {
-    if (confirm("Water terugzetten naar 0?")) {
+    if (confirm(t("resetWaterConfirm"))) {
       dagData.water = 0;
       saveDagData(dagData);
       renderWater();
@@ -228,13 +238,13 @@
   function renderSlaap() {
     if (dagData.slaap > 0) {
       document.getElementById("slaap-uur").value = dagData.slaap;
-      document.getElementById("slaap-status").textContent = "✓ " + dagData.slaap + " uur opgeslagen";
+      document.getElementById("slaap-status").textContent = t("sleepSaved", { value: dagData.slaap });
     }
   }
 
   document.getElementById("slaap-opslaan").addEventListener("click", () => {
     const uur = parseFloat(document.getElementById("slaap-uur").value);
-    if (isNaN(uur) || uur <= 0 || uur > 24) { alert("Vul een geldig aantal uren in (0-24)."); return; }
+    if (isNaN(uur) || uur <= 0 || uur > 24) { alert(t("validSleepError")); return; }
     dagData.slaap = uur;
     saveDagData(dagData);
     renderSlaap();
@@ -291,7 +301,7 @@
   document.getElementById("voeg-activiteit-toe").addEventListener("click", () => {
     const naam = document.getElementById("activiteit-naam").value.trim();
     const min  = parseInt(document.getElementById("activiteit-min").value);
-    if (!naam || isNaN(min) || min <= 0) { alert("Vul een naam en geldig aantal minuten in."); return; }
+    if (!naam || isNaN(min) || min <= 0) { alert(t("validActivityError")); return; }
     if (!dagData.activiteiten) dagData.activiteiten = [];
 
     if (editingActivityIndex !== null) {

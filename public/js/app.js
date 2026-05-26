@@ -4,6 +4,7 @@ fetch("components/navbar.html")
   .then(data => {
     document.getElementById("navbar").innerHTML = data;
     setupNavbar();
+    applyTranslations(document.getElementById("navbar"));
   });
 
 function setupNavbar() {
@@ -59,6 +60,9 @@ if (toggle) {
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
 }
+
+// Vertalingen toepassen op de huidige pagina
+applyTranslations(document);
 
 // Delegate clicks on elements with `data-href` so we can remove inline onclicks
 document.addEventListener('click', (e) => {
