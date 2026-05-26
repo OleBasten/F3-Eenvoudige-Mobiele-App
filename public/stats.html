@@ -27,12 +27,24 @@
 <main class="container py-3">
   <main class="container py-3">
 
-  <div class="card p-3 mb-3 dateText">
-    <p id="dateText" class="mb-0 text-muted"></p>
+  <div class="card p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <p id="dateText" class="mb-0 text-muted"></p>
+    </div>
+    <div class="btn-group w-100" role="group">
+      <input type="radio" class="btn-check" name="period" id="period-dag" value="dag">
+      <label class="btn btn-outline-primary" for="period-dag">Dag</label>
+
+      <input type="radio" class="btn-check" name="period" id="period-week" value="week" checked>
+      <label class="btn btn-outline-primary" for="period-week">Week</label>
+
+      <input type="radio" class="btn-check" name="period" id="period-maand" value="maand">
+      <label class="btn btn-outline-primary" for="period-maand">Maand</label>
+    </div>
   </div>
 
-  <!-- Overzicht deze week -->
-  <p class="sectie-label">📊 Deze week</p>
+  <!-- Overzicht periode -->
+  <p class="sectie-label">📊 Overzicht periode</p>
   <div class="card p-3 mb-3">
     <div class="row text-center g-2" id="week-overzicht"></div>
   </div>
@@ -75,12 +87,33 @@
     weekday: "long", year: "numeric", month: "long", day: "numeric"
   });
 
-  const limieten = getLimieten();
-  const dagen    = getLaatsteDagen(7);
+  let currentPeriod = "week";
+  let limieten = getLimieten();
+  let dagen = getLaatsteDagen(7);
+
+  function getPeriodData(period) {
+    if (period === "dag") return getLaatsteDagen(1);
+    if (period === "week") return getLaatsteDagen(7);
+    if (period === "maand") return getLaatsteDagen(30);
+  }
+
+  function updateStats() {
+    currentPeriod = document.querySelector('input[name="period"]:checked').value;
+    dagen = getPeriodData(currentPeriod);
+    weekOverzicht();
+    tekenGrafiek("grafiek-kcal", dagen.map(d => ({ ...d, waarde: d.kcal })), limieten.kcal, "#22c55e", "");
+    tekenGrafiek("grafiek-water", dagen.map(d => ({ ...d, waarde: Math.round(d.water * 10) / 10 })), limieten.water, "#3b82f6", "L");
+    updateGemiddelden();
+  }
+
+  document.querySelectorAll('input[name="period"]').forEach(radio => {
+    radio.addEventListener("change", updateStats);
+  });
 
   // ── Week overzicht ──
   function weekOverzicht() {
     const el = document.getElementById("week-overzicht");
+    el.innerHTML = "";
     const vandaagStr = vandaag();
 
     dagen.forEach(d => {
@@ -103,7 +136,6 @@
         </div>`;
     });
   }
-  weekOverzicht();
 
   // ── Staafgrafiek ──
   function tekenGrafiek(containerId, data, max, kleur, eenheid) {
@@ -134,66 +166,77 @@
     limieten.water, "#3b82f6", "L");
 
   // ── Gemiddelden ──
-  function gem(arr) {
-    const vals = arr.filter(v => v > 0);
-    if (!vals.length) return 0;
-    return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10;
+  function updateGemiddelden() {
+    const gemEl = document.getElementById("gemiddelden");
+    gemEl.innerHTML = "";
+
+    function gem(arr) {
+      const vals = arr.filter(v => v > 0);
+      if (!vals.length) return 0;
+      return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10;
+    }
+
+    const gemKcal  = gem(dagen.map(d => d.kcal));
+    const gemWater = gem(dagen.map(d => d.water));
+    const gemSlaap = gem(dagen.map(d => d.slaap));
+    const gemAct   = gem(dagen.map(d => d.activiteit));
+
+    const stats = [
+      { icon: "restaurant",     kleur: "green",  label: "Calorieën",  waarde: gemKcal  + " kcal", doel: limieten.kcal        + " kcal" },
+      { icon: "water_drop",     kleur: "blue",   label: "Water",      waarde: gemWater + " L",    doel: limieten.water       + " L"    },
+      { icon: "bedtime",        kleur: "purple", label: "Slaap",      waarde: gemSlaap + " uur",  doel: limieten.slaap       + " uur"  },
+      { icon: "directions_run", kleur: "orange", label: "Activiteit", waarde: gemAct   + " min",  doel: limieten.activiteit  + " min"  },
+    ];
+
+    stats.forEach(s => {
+      gemEl.innerHTML += `
+        <div class="col-6">
+          <div class="gem-kaart">
+            <div class="gem-icon ${s.kleur}">
+              <span class="material-symbols-outlined" style="font-size:20px">${s.icon}</span>
+            </div>
+            <div>
+              <div class="fw-bold">${s.waarde}</div>
+              <div class="text-muted small">${s.label} · doel: ${s.doel}</div>
+            </div>
+          </div>
+        </div>`;
+    });
   }
-
-  const gemKcal  = gem(dagen.map(d => d.kcal));
-  const gemWater = gem(dagen.map(d => d.water));
-  const gemSlaap = gem(dagen.map(d => d.slaap));
-  const gemAct   = gem(dagen.map(d => d.activiteit));
-
-  const gemEl = document.getElementById("gemiddelden");
-  const stats = [
-    { icon: "restaurant",     kleur: "green",  label: "Calorieën",  waarde: gemKcal  + " kcal", doel: limieten.kcal        + " kcal" },
-    { icon: "water_drop",     kleur: "blue",   label: "Water",      waarde: gemWater + " L",    doel: limieten.water       + " L"    },
-    { icon: "bedtime",        kleur: "purple", label: "Slaap",      waarde: gemSlaap + " uur",  doel: limieten.slaap       + " uur"  },
-    { icon: "directions_run", kleur: "orange", label: "Activiteit", waarde: gemAct   + " min",  doel: limieten.activiteit  + " min"  },
-  ];
-
-  stats.forEach(s => {
-    gemEl.innerHTML += `
-      <div class="col-6">
-        <div class="gem-kaart">
-          <div class="gem-icon ${s.kleur}">
-            <span class="material-symbols-outlined" style="font-size:20px">${s.icon}</span>
-          </div>
-          <div>
-            <div class="fw-bold">${s.waarde}</div>
-            <div class="text-muted small">${s.label} · doel: ${s.doel}</div>
-          </div>
-        </div>
-      </div>`;
-  });
 
   // ── Streaks ──
-  function berekenStreak(checkFn) {
-    let streak = 0;
-    for (let i = dagen.length - 1; i >= 0; i--) {
-      if (checkFn(dagen[i])) streak++;
-      else break;
+  function updateStreaks() {
+    function berekenStreak(checkFn) {
+      let streak = 0;
+      for (let i = dagen.length - 1; i >= 0; i--) {
+        if (checkFn(dagen[i])) streak++;
+        else break;
+      }
+      return streak;
     }
-    return streak;
+
+    const streaks = [
+      { label: "Calorie doel gehaald",     streak: berekenStreak(d => d.kcal > 0 && d.kcal <= limieten.kcal * 1.1) },
+      { label: "Waterdoel gehaald",        streak: berekenStreak(d => d.water >= limieten.water) },
+      { label: "Slaapdoel gehaald",        streak: berekenStreak(d => d.slaap >= limieten.slaap) },
+      { label: "Activiteitsdoel gehaald",  streak: berekenStreak(d => d.activiteit >= limieten.activiteit) },
+    ];
+
+    const streakEl = document.getElementById("streaks-card");
+    streakEl.innerHTML = "";
+    streaks.forEach((s, i) => {
+      const vuur = s.streak >= 3 ? "🔥" : s.streak >= 1 ? "✅" : "❌";
+      streakEl.innerHTML += `
+        <div class="d-flex justify-content-between align-items-center py-2 ${i > 0 ? 'border-top' : ''}">
+          <span>${vuur} ${s.label}</span>
+          <span class="fw-bold">${s.streak} dag${s.streak !== 1 ? "en" : ""}</span>
+        </div>`;
+    });
   }
 
-  const streaks = [
-    { label: "Calorie doel gehaald",     streak: berekenStreak(d => d.kcal > 0 && d.kcal <= limieten.kcal * 1.1) },
-    { label: "Waterdoel gehaald",        streak: berekenStreak(d => d.water >= limieten.water) },
-    { label: "Slaapdoel gehaald",        streak: berekenStreak(d => d.slaap >= limieten.slaap) },
-    { label: "Activiteitsdoel gehaald",  streak: berekenStreak(d => d.activiteit >= limieten.activiteit) },
-  ];
-
-  const streakEl = document.getElementById("streaks-card");
-  streaks.forEach((s, i) => {
-    const vuur = s.streak >= 3 ? "🔥" : s.streak >= 1 ? "✅" : "❌";
-    streakEl.innerHTML += `
-      <div class="d-flex justify-content-between align-items-center py-2 ${i > 0 ? 'border-top' : ''}">
-        <span>${vuur} ${s.label}</span>
-        <span class="fw-bold">${s.streak} dag${s.streak !== 1 ? "en" : ""}</span>
-      </div>`;
-  });
+  updateGemiddelden();
+  weekOverzicht();
+  updateStreaks();
 </script>
 
 

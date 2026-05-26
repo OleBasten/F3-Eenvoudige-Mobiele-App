@@ -60,7 +60,7 @@
       <div class="col-12">
         <button class="btn btn-success w-100" id="voeg-eten-toe">
           <span class="material-symbols-outlined align-middle me-1" style="font-size:18px">add</span>
-          Maaltijd toevoegen
+          <span id="eten-btn-text">Maaltijd toevoegen</span>
         </button>
       </div>
     </div>
@@ -135,6 +135,8 @@
   });
 
   // ── Maaltijden ──
+  let editingMealIndex = null;
+
   function renderMaaltijden() {
     const lijst = document.getElementById("maaltijden-lijst");
     const geen  = document.getElementById("geen-maaltijden");
@@ -154,11 +156,27 @@
         </div>
         <div class="d-flex align-items-center gap-2">
           <span class="fw-semibold">${m.kcal} kcal</span>
+          <button class="btn btn-sm btn-link text-primary p-0 edit-maaltijd" data-i="${i}">
+            <span class="material-symbols-outlined" style="font-size:18px">edit</span>
+          </button>
           <button class="btn btn-sm btn-link text-danger p-0 delete-maaltijd" data-i="${i}">
             <span class="material-symbols-outlined" style="font-size:18px">delete</span>
           </button>
         </div>`;
       lijst.appendChild(div);
+    });
+
+    lijst.querySelectorAll(".edit-maaltijd").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = parseInt(btn.dataset.i);
+        const m = dagData.maaltijden[i];
+        editingMealIndex = i;
+        document.getElementById("eten-naam").value = m.naam;
+        document.getElementById("eten-kcal").value = m.kcal;
+        document.getElementById("eten-type").value = m.type;
+        document.getElementById("eten-btn-text").textContent = "Wijziging opslaan";
+        document.getElementById("eten-naam").focus();
+      });
     });
 
     lijst.querySelectorAll(".delete-maaltijd").forEach(btn => {
@@ -175,7 +193,15 @@
     const kcal = parseInt(document.getElementById("eten-kcal").value);
     const type = document.getElementById("eten-type").value;
     if (!naam || isNaN(kcal) || kcal <= 0) { alert("Vul een naam en geldig aantal kcal in."); return; }
-    dagData.maaltijden.push({ naam, kcal, type });
+
+    if (editingMealIndex !== null) {
+      dagData.maaltijden[editingMealIndex] = { naam, kcal, type };
+      editingMealIndex = null;
+      document.getElementById("eten-btn-text").textContent = "Maaltijd toevoegen";
+    } else {
+      dagData.maaltijden.push({ naam, kcal, type });
+    }
+
     saveDagData(dagData);
     renderMaaltijden();
     document.getElementById("eten-naam").value = "";
@@ -221,6 +247,8 @@
   });
 
   // ── Activiteit ──
+  let editingActivityIndex = null;
+
   function renderActiviteit() {
     const lijst = document.getElementById("activiteit-lijst");
     lijst.innerHTML = "";
@@ -235,11 +263,25 @@
         <span>🏃 ${a.naam}</span>
         <div class="d-flex align-items-center gap-2">
           <span class="fw-semibold">${a.min} min</span>
+          <button class="btn btn-sm btn-link text-primary p-0 edit-act" data-i="${i}">
+            <span class="material-symbols-outlined" style="font-size:18px">edit</span>
+          </button>
           <button class="btn btn-sm btn-link text-danger p-0 delete-act" data-i="${i}">
             <span class="material-symbols-outlined" style="font-size:18px">delete</span>
           </button>
         </div>`;
       lijst.appendChild(div);
+    });
+
+    lijst.querySelectorAll(".edit-act").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = parseInt(btn.dataset.i);
+        const a = dagData.activiteiten[i];
+        editingActivityIndex = i;
+        document.getElementById("activiteit-naam").value = a.naam;
+        document.getElementById("activiteit-min").value = a.min;
+        document.getElementById("activiteit-naam").focus();
+      });
     });
 
     lijst.querySelectorAll(".delete-act").forEach(btn => {
@@ -257,7 +299,14 @@
     const min  = parseInt(document.getElementById("activiteit-min").value);
     if (!naam || isNaN(min) || min <= 0) { alert("Vul een naam en geldig aantal minuten in."); return; }
     if (!dagData.activiteiten) dagData.activiteiten = [];
-    dagData.activiteiten.push({ naam, min });
+
+    if (editingActivityIndex !== null) {
+      dagData.activiteiten[editingActivityIndex] = { naam, min };
+      editingActivityIndex = null;
+    } else {
+      dagData.activiteiten.push({ naam, min });
+    }
+
     dagData.activiteit = dagData.activiteiten.reduce((s, a) => s + a.min, 0);
     saveDagData(dagData);
     renderActiviteit();
