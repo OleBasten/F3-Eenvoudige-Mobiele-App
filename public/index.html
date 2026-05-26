@@ -13,9 +13,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="styles/global.css">
-
   <link rel="stylesheet" href="styles/dashboard.css">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 
 <body>
@@ -27,14 +25,13 @@
 <h4 id="groet">Mijn Gezondheid</h4>
 
 <main class="container py-3">
-  <main class="container py-3">
 
   <div class="card p-3 mb-3 dateText">
     <p id="dateText" class="mb-0 text-muted"></p>
   </div>
 
   <!-- Calorieën -->
-  <div class="card p-3 mb-3 stat d-flex align-items-center" style="cursor:pointer" onclick="location.href='tracker.html'">
+  <div class="card p-3 mb-3 stat d-flex align-items-center" data-href="tracker.html">
     <div class="icon green me-3">
       <span class="material-symbols-outlined">restaurant</span>
     </div>
@@ -49,7 +46,7 @@
   </div>
 
   <!-- Water -->
-  <div class="card p-3 mb-3 stat d-flex align-items-center" style="cursor:pointer" onclick="location.href='tracker.html'">
+  <div class="card p-3 mb-3 stat d-flex align-items-center" data-href="tracker.html">
     <div class="icon blue me-3">
       <span class="material-symbols-outlined">water_drop</span>
     </div>
@@ -64,7 +61,7 @@
   </div>
 
   <!-- Slaap -->
-  <div class="card p-3 mb-3 stat d-flex align-items-center" style="cursor:pointer" onclick="location.href='tracker.html'">
+  <div class="card p-3 mb-3 stat d-flex align-items-center" data-href="tracker.html">
     <div class="icon purple me-3">
       <span class="material-symbols-outlined">bedtime</span>
     </div>
@@ -79,7 +76,7 @@
   </div>
 
   <!-- Activiteit -->
-  <div class="card p-3 mb-3 stat d-flex align-items-center" style="cursor:pointer" onclick="location.href='tracker.html'">
+  <div class="card p-3 mb-3 stat d-flex align-items-center" data-href="tracker.html">
     <div class="icon orange me-3">
       <span class="material-symbols-outlined">directions_run</span>
     </div>

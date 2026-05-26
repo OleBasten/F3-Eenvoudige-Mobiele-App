@@ -1,108 +1,14 @@
-.stat {
-  gap: 12px;
-}
+.sectie-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#88908a;margin:14px 0 8px}
+.dag-blok{border-radius:12px;padding:10px 4px;text-align:center}
+.dag-vandaag{outline:3px solid var(--accent);outline-offset:2px}
+.dag-label{font-size:11px;font-weight:700;color:#555}
+.dag-emoji{font-size:18px;margin-top:2px}
 
-.icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  transition: 0.2s;
-}
-
-.card:hover .icon {
-  transform: scale(1.1);
-}
-
-.green { background: linear-gradient(135deg,#22c55e,#16a34a); }
-.purple { background: linear-gradient(135deg,#9333ea,#7e22ce); }
-.blue { background: linear-gradient(135deg,#3b82f6,#2563eb); }
-
-.big {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* progress bar */
-.bar-bg {
-  background: #eee;
-  height: 10px;
-  border-radius: 10px;
-}
-
-.bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(135deg,#25a03c,#34d018);
-  transition: 0.6s;
-}
-
-header.topbar.text-center.p-3.bg-light {
-  background: linear-gradient(135deg,#248235,#34d018);
-  color: #16a34a;
-}
-
-.dateText {
-  color: rgb(69, 69, 69);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-h4 {
-  color: white;
-}
-
-.card {
-  background-color: rgb(226, 226, 226);
-}
-
-.sectie-label {
-  font-size: 12px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: #888; margin: 16px 0 6px 4px;
-}
-
-.dag-blok {
-  border-radius: 12px; padding: 10px 4px; text-align: center;
-}
-.dag-vandaag { outline: 3px solid #16a34a; outline-offset: 2px; }
-.dag-label { font-size: 11px; font-weight: 700; color: #555; }
-.dag-emoji { font-size: 18px; margin-top: 2px; }
-
-.grafiek-wrapper { overflow-x: auto; }
-.grafiek {
-  display: flex; align-items: flex-end; gap: 8px;
-  height: 140px; padding: 8px 0; min-width: 100%;
-}
-.staaf-wrapper {
-  flex: 1; min-width: 36px;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-}
-.staaf-waarde { font-size: 10px; color: #666; text-align: center; min-height: 14px; }
-.staaf-balk-wrapper {
-  flex-grow: 1; width: 100%; position: relative;
-  display: flex; align-items: flex-end;
-}
-.staaf-balk {
-  width: 100%; border-radius: 6px 6px 0 0; min-height: 4px;
-}
-.staaf-doel {
-  position: absolute; left: 0; right: 0;
-  height: 2px; background: rgba(0,0,0,0.2); border-radius: 2px; z-index: 1;
-}
-.staaf-label { font-size: 11px; color: #666; }
-
-.gem-kaart {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px; border-radius: 12px; background: #f9fafb;
-}
-.gem-icon {
-  min-width: 36px; height: 36px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center; color: white;
-}
-.green  { background: linear-gradient(135deg, #22c55e, #16a34a); }
-.blue   { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-.purple { background: linear-gradient(135deg, #9333ea, #7e22ce); }
-.orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+.grafiek-wrapper{overflow-x:auto}
+.grafiek{display:flex;align-items:flex-end;gap:8px;height:140px;padding:8px 0;min-width:100%}
+.staaf-wrapper{flex:1;min-width:36px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.staaf-waarde{font-size:10px;color:#666;text-align:center;min-height:14px}
+.staaf-balk-wrapper{flex-grow:1;width:100%;position:relative;display:flex;align-items:flex-end}
+.staaf-balk{width:100%;border-radius:6px 6px 0 0;min-height:4px}
+.staaf-doel{position:absolute;left:0;right:0;height:2px;background:rgba(0,0,0,0.08);border-radius:2px;z-index:1}
+.staaf-label{font-size:11px;color:#666}

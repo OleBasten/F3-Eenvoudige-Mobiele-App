@@ -1,6 +1,8 @@
-.stat {
-  gap: 12px;
-}
+.sectie-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#88908a;margin:14px 0 8px}
+
+.tracker-form{display:flex;flex-direction:column;gap:12px}
+.tracker-row{display:flex;gap:8px;align-items:center}
+.tracker-row input, .tracker-row select{flex:1;padding:8px;border-radius:8px;border:1px solid #e6e6e6}
 
 .icon {
   width: 50px;
