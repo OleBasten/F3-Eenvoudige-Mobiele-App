@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_NAME = `mijn-eerste-server-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -21,7 +21,6 @@ const PRECACHE_URLS = [
   "/icons/maskable-icon.svg",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
   "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap",
-  "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined",
   "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js",
   "https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"
 ];
