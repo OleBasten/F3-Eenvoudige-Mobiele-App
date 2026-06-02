@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mijn Gezondheid">
+  <rect width="512" height="512" fill="#16a34a"/>
+  <circle cx="256" cy="256" r="170" fill="#22c55e"/>
+  <path d="M120 270h74l30-64 42 118 28-54h98" fill="none" stroke="#fff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M256 122v44M256 346v44M122 256h44M346 256h44" stroke="#fff" stroke-width="22" stroke-linecap="round"/>
+</svg>

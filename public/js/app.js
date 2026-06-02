@@ -86,3 +86,70 @@ document.querySelectorAll('[data-href]').forEach(el => {
   if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
   if (!el.getAttribute('role')) el.setAttribute('role', 'link');
 });
+
+function showConfirmDialog({ title, message, confirmText, cancelText, confirmClass = "btn-danger" }) {
+  return new Promise(resolve => {
+    const existing = document.getElementById("appConfirmDialog");
+    if (existing) existing.remove();
+
+    const overlay = document.createElement("div");
+    overlay.id = "appConfirmDialog";
+    overlay.className = "app-dialog-overlay";
+    overlay.innerHTML = `
+      <div class="app-dialog" role="dialog" aria-modal="true" aria-labelledby="appConfirmDialogTitle" aria-describedby="appConfirmDialogMessage">
+        <div class="app-dialog-icon">!</div>
+        <div class="app-dialog-content">
+          <h5 class="app-dialog-title" id="appConfirmDialogTitle"></h5>
+          <p class="app-dialog-message" id="appConfirmDialogMessage"></p>
+        </div>
+        <div class="app-dialog-actions">
+          <button type="button" class="btn btn-light app-dialog-cancel" data-action="cancel"></button>
+          <button type="button" class="btn app-dialog-confirm" data-action="confirm"></button>
+        </div>
+      </div>`;
+
+    const titleEl = overlay.querySelector("#appConfirmDialogTitle");
+    const messageEl = overlay.querySelector("#appConfirmDialogMessage");
+    const cancelBtn = overlay.querySelector("[data-action='cancel']");
+    const confirmBtn = overlay.querySelector("[data-action='confirm']");
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    cancelBtn.textContent = cancelText;
+    confirmBtn.textContent = confirmText;
+    confirmBtn.className = `btn app-dialog-confirm ${confirmClass}`;
+
+    const close = (result) => {
+      document.removeEventListener("keydown", onKeyDown);
+      overlay.remove();
+      document.body.classList.remove("dialog-open");
+      resolve(result);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") close(false);
+    };
+
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) close(false);
+    });
+
+    cancelBtn.addEventListener("click", () => close(false));
+    confirmBtn.addEventListener("click", () => close(true));
+
+    document.body.classList.add("dialog-open");
+    document.addEventListener("keydown", onKeyDown);
+    document.body.appendChild(overlay);
+    window.requestAnimationFrame(() => confirmBtn.focus());
+  });
+}
+
+window.showConfirmDialog = showConfirmDialog;
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js").catch(err => {
+      console.warn("Service worker registration failed", err);
+    });
+  });
+}
