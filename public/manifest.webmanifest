@@ -1,0 +1,24 @@
+{
+  "name": "Mijn Gezondheid",
+  "short_name": "Gezondheid",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f5",
+  "theme_color": "#16a34a",
+  "description": "Een persoonlijke dashboard-app voor voeding, water, slaap en activiteit.",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -2,3 +2,6 @@
 .limiet-rij{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
 .limiet-rij:last-child{border-bottom:none}
 .limiet-icon{font-size:20px}
+.export-pdf-btn{background:linear-gradient(135deg,var(--accent-2),var(--accent));border:none;color:#fff;box-shadow:0 10px 18px rgba(20,184,166,0.18)}
+.export-pdf-btn:hover,.export-pdf-btn:focus{color:#fff;filter:brightness(0.98)}
+.export-pdf-btn:disabled{opacity:.7}
